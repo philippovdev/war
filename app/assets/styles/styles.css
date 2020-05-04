@@ -1,0 +1,9 @@
+@import "normalize.css";
+@import "base/_variables.css";
+@import "base/_mixins.css";
+@import "base/_global.css";
+@import "slider/_slider-layout.css";
+@import "slider/_slider.css";
+@import "slider/_dots.css";
+@import "slider/_modal.css";
+@import "slider/_modal-layout.css";
