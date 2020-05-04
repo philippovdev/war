@@ -23,10 +23,13 @@ class Slider {
         this.next.addEventListener('click', () => {
             this.clearAnimated()
             this.handleNext('.slider-item--active')
+
         })
         document.addEventListener('keyup', (e) => {
-            this.clearAnimated()
-            this.handleKeyPress(e)
+            if (!document.querySelector('.modal.open')) {
+                this.clearAnimated()
+                this.handleKeyPress(e)
+            }
         })
     }
 
@@ -124,7 +127,7 @@ class Slider {
                 this.currentSlide.nextElementSibling.classList.remove('slider-item--next')
             }
         }, 50)
-        // new Modal()
+        new Modal([...this.sliderItems].indexOf(document.querySelector('.slider-item--active')))
     }
 
     handleNext (selector) {
@@ -147,6 +150,7 @@ class Slider {
             }
         }
         // new Modal()
+        new Modal([...this.sliderItems].indexOf(document.querySelector('.slider-item--active')))
     }
 }
 

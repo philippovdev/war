@@ -1,7 +1,7 @@
 class Modal {
     constructor (id) {
         this.modal = document.querySelector(`#id-${id}`)
-        this.btn = document.querySelector('.slider-item__box-btn')
+        this.btn = document.querySelector(`[data-id='${id}'].slider-item__box-btn`)
 
         this.prev = document.querySelector('.nav-buttons .prev')
         this.next = document.querySelector('.nav-buttons .next')
@@ -18,13 +18,13 @@ class Modal {
     toggleModal () {
         this.modal.classList.toggle('open')
         document.body.classList.toggle('has-overlay')
-        /*this.prev.classList.toggle('hidden')
+        this.prev.classList.toggle('hidden')
         this.next.classList.toggle('hidden')
         this.dots.classList.toggle('hidden')
         this.btn.classList.toggle('back-to-gallery')
 
         const activeSlide = document.querySelector('.slider-item--active')
-        activeSlide.classList.toggle('show-modal')*/
+        activeSlide.classList.toggle('show-modal')
     }
 
     closeModal (e) {
