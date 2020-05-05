@@ -5,7 +5,6 @@ class Modal {
 
         this.prev = document.querySelector('.nav-buttons .prev')
         this.next = document.querySelector('.nav-buttons .next')
-        this.dots = document.querySelector('.nav-dots')
 
         this.events()
     }
@@ -20,7 +19,6 @@ class Modal {
         document.body.classList.toggle('has-overlay')
         this.prev.classList.toggle('hidden')
         this.next.classList.toggle('hidden')
-        this.dots.classList.toggle('hidden')
         this.btn.classList.toggle('back-to-gallery')
 
         const activeSlide = document.querySelector('.slider-item--active')

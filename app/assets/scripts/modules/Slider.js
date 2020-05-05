@@ -12,7 +12,6 @@ class Slider {
     }
 
     events () {
-        this.createDots()
         this.checkPrev([...this.sliderItems].indexOf(this.currentSlide))
         this.checkNext([...this.sliderItems].indexOf(this.currentSlide))
 
@@ -31,6 +30,31 @@ class Slider {
                 this.handleKeyPress(e)
             }
         })
+
+        let touchstartX = 0;
+        let touchendX = 0;
+
+        this.currentSlide = document.querySelector('.slider-wrapper');
+
+        this.currentSlide.addEventListener('touchstart', (event) => {
+            this.clearAnimated()
+            touchstartX = event.changedTouches[0].screenX;
+        }, false);
+
+        this.currentSlide.addEventListener('touchend', (event) => {
+            touchendX = event.changedTouches[0].screenX;
+            if (touchendX <= touchstartX) {
+                if (touchendX <= touchstartX) {
+                    this.handleNext('.slider-item--active')
+                }
+            }
+
+            if (touchendX >= touchstartX) {
+                if (document.querySelector('.slider-item--prev')) {
+                    this.handlePrev('.slider-item--active')
+                }
+            }
+        }, false);
     }
 
     clearAnimated () {
@@ -52,16 +76,6 @@ class Slider {
                 this.handleNext('.slider-item--active')
             }
         }
-    }
-
-    createDots () {
-        if (this.dotsBox) {
-            for (let i = 0; i <= this.sliderItems.length - 1; i++) {
-                this.dotsBox.insertAdjacentHTML('beforeend', '<span class="dot"></span>')
-            }
-        }
-        this.currentSlide = document.querySelector('.slider-item--active')
-        this.setDotColor([...this.sliderItems].indexOf(this.currentSlide))
     }
 
     checkPrev (i) {
@@ -91,8 +105,6 @@ class Slider {
     }
 
     handlePrev (selector) {
-        // new Modal()
-
         this.currentSlide = document.querySelector(selector)
 
         this.checkPrev([...this.sliderItems].indexOf(this.currentSlide.previousElementSibling))
@@ -126,12 +138,11 @@ class Slider {
             if (this.currentSlide.nextElementSibling) {
                 this.currentSlide.nextElementSibling.classList.remove('slider-item--next')
             }
-        }, 50)
+        }, 100)
         new Modal([...this.sliderItems].indexOf(document.querySelector('.slider-item--active')))
     }
 
     handleNext (selector) {
-        // new Modal()
         this.checkPrev([...this.sliderItems].indexOf(this.currentSlide.nextElementSibling))
         this.currentSlide = document.querySelector(selector)
 
@@ -149,7 +160,6 @@ class Slider {
                 this.currentSlide.nextElementSibling.nextElementSibling.classList.add('slider-item--next')
             }
         }
-        // new Modal()
         new Modal([...this.sliderItems].indexOf(document.querySelector('.slider-item--active')))
     }
 }
