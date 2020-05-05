@@ -1,8 +1,0 @@
-.modal:nth-child(odd) {
-    left: 10%;
-}
-
-.modal:nth-child(even) {
-    left: 50%;
-}
-

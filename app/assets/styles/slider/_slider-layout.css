@@ -1,10 +1,10 @@
 .slider-wrapper {
     position: relative;
-    min-height: 850px;
+    min-height: 800px;
     overflow: hidden;
     height: 100vh;
     background-color: #e5e5e5;
-    background-image: url("assets/img/bg.jpg");
+    background-image: url("../assets/img/bg.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -25,14 +25,15 @@
     .nav-buttons {
         position: absolute;
         display: flex;
-        bottom: 5%;
+        bottom: -10px;
         left: 50%;
         transform: translate(-50%, -50%);
         justify-content: space-between;
         padding: 0;
         z-index: 4;
+        width: 297px;
 
-        @mixin atMediumSlider {
+        @mixin atBigSlider {
             top: 50%;
             bottom: unset;
             padding: 0 20px;
