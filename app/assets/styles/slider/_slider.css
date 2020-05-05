@@ -5,7 +5,7 @@
     will-change: opacity;
     position: absolute;
     transition: opacity .7s, transform 1s, filter .5s, width 1s;
-
+    top: 8%;
     max-width: 297px;
     object-fit: cover;
     overflow: hidden;

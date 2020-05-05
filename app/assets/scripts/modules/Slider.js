@@ -7,12 +7,13 @@ class Slider {
         this.sliderItems = document.querySelectorAll('.slider-item')
         this.dotsBox = document.querySelector('.nav-dots')
         this.currentSlide = null
+        this.sliderWrapper = null
 
         this.events()
     }
 
     events () {
-        this.createDots()
+        this.currentSlide = document.querySelector('.slider-item--active')
         this.checkPrev([...this.sliderItems].indexOf(this.currentSlide))
         this.checkNext([...this.sliderItems].indexOf(this.currentSlide))
 
@@ -31,6 +32,31 @@ class Slider {
                 this.handleKeyPress(e)
             }
         })
+
+        let touchstartX = 0;
+        let touchendX = 0;
+
+        this.sliderWrapper = document.querySelector('.slider-wrapper');
+
+        this.sliderWrapper.addEventListener('touchstart', (event) => {
+            this.clearAnimated()
+            touchstartX = event.changedTouches[0].screenX;
+        }, false);
+
+        this.sliderWrapper.addEventListener('touchend', (event) => {
+            touchendX = event.changedTouches[0].screenX;
+            if (touchendX <= touchstartX) {
+                if (touchendX + 30 <= touchstartX) {
+                    this.handleNext('.slider-item--active')
+                }
+            }
+
+            if (touchendX - 30 >= touchstartX) {
+                if (document.querySelector('.slider-item--prev')) {
+                    this.handlePrev('.slider-item--active')
+                }
+            }
+        }, false);
     }
 
     clearAnimated () {
@@ -52,16 +78,6 @@ class Slider {
                 this.handleNext('.slider-item--active')
             }
         }
-    }
-
-    createDots () {
-        if (this.dotsBox) {
-            for (let i = 0; i <= this.sliderItems.length - 1; i++) {
-                this.dotsBox.insertAdjacentHTML('beforeend', '<span class="dot"></span>')
-            }
-        }
-        this.currentSlide = document.querySelector('.slider-item--active')
-        this.setDotColor([...this.sliderItems].indexOf(this.currentSlide))
     }
 
     checkPrev (i) {
@@ -91,8 +107,6 @@ class Slider {
     }
 
     handlePrev (selector) {
-        // new Modal()
-
         this.currentSlide = document.querySelector(selector)
 
         this.checkPrev([...this.sliderItems].indexOf(this.currentSlide.previousElementSibling))
@@ -126,16 +140,15 @@ class Slider {
             if (this.currentSlide.nextElementSibling) {
                 this.currentSlide.nextElementSibling.classList.remove('slider-item--next')
             }
-        }, 50)
+        }, 100)
         new Modal([...this.sliderItems].indexOf(document.querySelector('.slider-item--active')))
     }
 
     handleNext (selector) {
-        // new Modal()
-        this.checkPrev([...this.sliderItems].indexOf(this.currentSlide.nextElementSibling))
         this.currentSlide = document.querySelector(selector)
 
         if (this.currentSlide && this.currentSlide.nextElementSibling) {
+            this.checkPrev([...this.sliderItems].indexOf(this.currentSlide.nextElementSibling))
             this.checkNext([...this.sliderItems].indexOf(this.currentSlide.nextElementSibling))
             this.setDotColor([...this.sliderItems].indexOf(this.currentSlide.nextElementSibling))
             if (this.currentSlide.previousElementSibling) {
@@ -149,7 +162,6 @@ class Slider {
                 this.currentSlide.nextElementSibling.nextElementSibling.classList.add('slider-item--next')
             }
         }
-        // new Modal()
         new Modal([...this.sliderItems].indexOf(document.querySelector('.slider-item--active')))
     }
 }
