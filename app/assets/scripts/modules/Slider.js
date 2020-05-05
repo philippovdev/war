@@ -7,11 +7,13 @@ class Slider {
         this.sliderItems = document.querySelectorAll('.slider-item')
         this.dotsBox = document.querySelector('.nav-dots')
         this.currentSlide = null
+        this.sliderWrapper = null
 
         this.events()
     }
 
     events () {
+        this.currentSlide = document.querySelector('.slider-item--active')
         this.checkPrev([...this.sliderItems].indexOf(this.currentSlide))
         this.checkNext([...this.sliderItems].indexOf(this.currentSlide))
 
@@ -34,22 +36,22 @@ class Slider {
         let touchstartX = 0;
         let touchendX = 0;
 
-        this.currentSlide = document.querySelector('.slider-wrapper');
+        this.sliderWrapper = document.querySelector('.slider-wrapper');
 
-        this.currentSlide.addEventListener('touchstart', (event) => {
+        this.sliderWrapper.addEventListener('touchstart', (event) => {
             this.clearAnimated()
             touchstartX = event.changedTouches[0].screenX;
         }, false);
 
-        this.currentSlide.addEventListener('touchend', (event) => {
+        this.sliderWrapper.addEventListener('touchend', (event) => {
             touchendX = event.changedTouches[0].screenX;
             if (touchendX <= touchstartX) {
-                if (touchendX <= touchstartX) {
+                if (touchendX + 30 <= touchstartX) {
                     this.handleNext('.slider-item--active')
                 }
             }
 
-            if (touchendX >= touchstartX) {
+            if (touchendX - 30 >= touchstartX) {
                 if (document.querySelector('.slider-item--prev')) {
                     this.handlePrev('.slider-item--active')
                 }
@@ -143,10 +145,10 @@ class Slider {
     }
 
     handleNext (selector) {
-        this.checkPrev([...this.sliderItems].indexOf(this.currentSlide.nextElementSibling))
         this.currentSlide = document.querySelector(selector)
 
         if (this.currentSlide && this.currentSlide.nextElementSibling) {
+            this.checkPrev([...this.sliderItems].indexOf(this.currentSlide.nextElementSibling))
             this.checkNext([...this.sliderItems].indexOf(this.currentSlide.nextElementSibling))
             this.setDotColor([...this.sliderItems].indexOf(this.currentSlide.nextElementSibling))
             if (this.currentSlide.previousElementSibling) {

@@ -10,7 +10,7 @@
 
     .slider {
         min-height: 850px;
-        @mixin absoluteCenter;
+        left: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -23,7 +23,7 @@
     .nav-buttons {
         position: absolute;
         display: flex;
-        bottom: -10px;
+        bottom: 0;
         left: 50%;
         transform: translate(-50%, -50%);
         justify-content: space-between;
