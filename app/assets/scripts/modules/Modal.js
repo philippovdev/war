@@ -13,7 +13,6 @@ class Modal {
         this.btn.addEventListener('click', this.toggleModal.bind(this))
         this.modal.addEventListener('click', e => {
             if (e.target.classList.contains('close-modal-btn') || e.target.classList.contains('close-modal-x')) {
-                console.log('closesese')
                 this.removeOpenClasses()
             }
         })
