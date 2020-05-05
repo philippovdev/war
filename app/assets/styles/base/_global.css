@@ -1,44 +1,39 @@
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
+}
+
+.slider-item--active {
+    transition: background-color 1s;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 body {
-  color: #333;
-
-  p {
-    font-family: 'Noto Serif', serif;
-  }
-  p.subtitle {
-    font-family: 'Arsenal', sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 21px;
-    letter-spacing: 0.05em;
-    color: #262626;
-  }
+    p {
+        font-family: 'Noto Serif', serif;
+    }
 }
 
 img {
-  width: 100%;
-  height: auto;
+    width: 100%;
+    height: auto;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .hidden-mobile {
-  display: none;
-  @mixin atBigSlider {
-    display: inline-block;
-  }
-}
-.hidden-big {
-  display: inline-block;
-  @mixin atBigSlider {
     display: none;
-  }
+    @mixin atBigSlider {
+        display: inline-block;
+    }
+}
+
+.hidden-big {
+    display: inline-block;
+    @mixin atBigSlider {
+        display: none;
+    }
 }

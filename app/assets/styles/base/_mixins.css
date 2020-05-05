@@ -1,29 +1,5 @@
-@define-mixin atSmall {
-  @media (min-width: 576px) {
-    @mixin-content;
-  }
-}
-
-@define-mixin atMedium {
-  @media (min-width: 768px) {
-    @mixin-content;
-  }
-}
-
-@define-mixin atLarge {
-  @media (min-width: 992px) {
-    @mixin-content;
-  }
-}
-
 @define-mixin atBigSlider {
-  @media (min-width: 920px) {
-    @mixin-content;
-  }
-}
-
-@define-mixin atMediumSlider {
-  @media (min-width: 682px) {
+  @media (min-width: 1000px) {
     @mixin-content;
   }
 }
@@ -34,10 +10,6 @@
     clear: both;
     display: table;
   }
-}
-
-@define-mixin paddingReg {
-  padding: 8px 30px;
 }
 
 @define-mixin absoluteCenter {

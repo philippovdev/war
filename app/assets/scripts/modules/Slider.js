@@ -15,9 +15,30 @@ class Slider {
         this.createDots()
         this.checkPrev([...this.sliderItems].indexOf(this.currentSlide))
         this.checkNext([...this.sliderItems].indexOf(this.currentSlide))
-        this.prev.addEventListener('click', () => this.handlePrev('.slider-item--active'))
-        this.next.addEventListener('click', () => this.handleNext('.slider-item--active'))
-        document.addEventListener('keyup', this.handleKeyPress.bind(this))
+
+        this.prev.addEventListener('click', () => {
+            this.clearAnimated()
+            this.handlePrev('.slider-item--active')
+        })
+        this.next.addEventListener('click', () => {
+            this.clearAnimated()
+            this.handleNext('.slider-item--active')
+
+        })
+        document.addEventListener('keyup', (e) => {
+            if (!document.querySelector('.modal.open')) {
+                this.clearAnimated()
+                this.handleKeyPress(e)
+            }
+        })
+    }
+
+    clearAnimated () {
+        this.sliderItems.forEach(item => {
+            if (item.classList.contains('animated')) {
+                item.classList.remove('animated')
+            }
+        })
     }
 
     handleKeyPress (e) {
@@ -53,7 +74,6 @@ class Slider {
 
     checkNext (i) {
         if (i === this.sliderItems.length - 1) {
-            console.log(this.sliderItems.length - 1)
             this.next.classList.add('disabled')
         } else {
             this.next.classList.remove('disabled')
@@ -71,39 +91,47 @@ class Slider {
     }
 
     handlePrev (selector) {
-        new Modal()
+        // new Modal()
+
         this.currentSlide = document.querySelector(selector)
+
         this.checkPrev([...this.sliderItems].indexOf(this.currentSlide.previousElementSibling))
         this.setDotColor([...this.sliderItems].indexOf(this.currentSlide.previousElementSibling))
         this.checkNext([...this.sliderItems].indexOf(this.currentSlide.previousElementSibling))
 
-        if (this.currentSlide.previousElementSibling.classList.contains('slider-item--prev')) {
-
-            if (!this.currentSlide.previousElementSibling.previousElementSibling) {
-
-                this.currentSlide.previousElementSibling.classList.remove('slider-item--prev')
-                this.currentSlide.previousElementSibling.classList.add('slider-item--active')
-                this.currentSlide.classList.remove('slider-item--active')
-                this.currentSlide.classList.add('slider-item--next')
-                this.currentSlide.nextElementSibling.classList.remove('slider-item--next')
-            } else {
-                this.currentSlide.previousElementSibling.previousElementSibling.classList.add('slider-item--prev')
-                this.currentSlide.previousElementSibling.classList.remove('slider-item--prev')
-                this.currentSlide.previousElementSibling.classList.add('slider-item--active')
+        if (this.currentSlide.previousElementSibling && this.currentSlide.previousElementSibling.classList.contains('animated')) {
+            this.currentSlide.classList.remove('animated')
+        }
+        setTimeout(() => {
+            if (this.currentSlide.previousElementSibling.classList.contains('slider-item--prev')) {
+                if (!this.currentSlide.previousElementSibling.previousElementSibling) {
+                    this.currentSlide.previousElementSibling.classList.remove('slider-item--prev')
+                    this.currentSlide.previousElementSibling.classList.remove('animated')
+                    this.currentSlide.previousElementSibling.classList.add('slider-item--active')
+                    this.currentSlide.classList.remove('slider-item--active', 'animated')
+                    this.currentSlide.classList.add('slider-item--next', 'animated')
+                    this.currentSlide.nextElementSibling.classList.remove('slider-item--next', 'animated')
+                } else {
+                    this.currentSlide.previousElementSibling.previousElementSibling.classList.remove('animated')
+                    this.currentSlide.previousElementSibling.previousElementSibling.classList.add('slider-item--prev')
+                    this.currentSlide.previousElementSibling.classList.remove('slider-item--prev')
+                    this.currentSlide.previousElementSibling.classList.remove('animated')
+                    this.currentSlide.previousElementSibling.classList.add('slider-item--active')
+                }
             }
-        }
 
-        this.currentSlide.classList.remove('slider-item--active')
-        this.currentSlide.classList.add('slider-item--next')
+            this.currentSlide.classList.remove('slider-item--active')
+            this.currentSlide.classList.add('slider-item--next')
 
-        if (this.currentSlide.nextElementSibling) {
-            this.currentSlide.nextElementSibling.classList.remove('slider-item--next')
-        }
-        new Modal()
+            if (this.currentSlide.nextElementSibling) {
+                this.currentSlide.nextElementSibling.classList.remove('slider-item--next')
+            }
+        }, 50)
+        new Modal([...this.sliderItems].indexOf(document.querySelector('.slider-item--active')))
     }
 
     handleNext (selector) {
-        new Modal()
+        // new Modal()
         this.checkPrev([...this.sliderItems].indexOf(this.currentSlide.nextElementSibling))
         this.currentSlide = document.querySelector(selector)
 
@@ -114,14 +142,15 @@ class Slider {
                 this.currentSlide.previousElementSibling.classList.remove('slider-item--prev')
             }
             this.currentSlide.classList.remove('slider-item--active')
-            this.currentSlide.classList.add('slider-item--prev')
+            this.currentSlide.classList.add('slider-item--prev', 'animated')
             this.currentSlide.nextElementSibling.classList.remove('slider-item--next')
             this.currentSlide.nextElementSibling.classList.add('slider-item--active')
             if (this.currentSlide.nextElementSibling.nextElementSibling) {
                 this.currentSlide.nextElementSibling.nextElementSibling.classList.add('slider-item--next')
             }
         }
-        new Modal()
+        // new Modal()
+        new Modal([...this.sliderItems].indexOf(document.querySelector('.slider-item--active')))
     }
 }
 
